@@ -2,7 +2,7 @@
   <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <!-- This is the tree node template for leaf nodes -->
     <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="example-tree-node" [cdkTreeNodePadding]="0">
-      <ng-container *ngTemplateOutlet="leaf"></ng-container>
+        <ng-container *ngTemplateOutlet="leaf; context: { 'node': node }"></ng-container>
     </cdk-nested-tree-node>
 
     <!-- This is the tree node template for expandable nodes -->
@@ -27,9 +27,9 @@
   </cdk-tree>
 </div>
 
-<ng-template #leaf>
+<ng-template #leaf let-node="node">
   <div class="logic-condition-direct-container">
     <app-logic-condition></app-logic-condition>
-    <app-condition-delete-button></app-condition-delete-button>
+    <app-condition-delete-button (onClick)="handleDelete(node)"></app-condition-delete-button>
   </div>
 </ng-template>

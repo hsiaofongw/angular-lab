@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-condition-delete-button',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConditionDeleteButtonComponent implements OnInit {
 
+  @Output()
+  onClick = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  handleClick(): void {
+    this.onClick.emit();
   }
 
 }

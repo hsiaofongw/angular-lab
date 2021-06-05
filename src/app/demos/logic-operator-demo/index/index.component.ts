@@ -3,40 +3,52 @@ import { Component, OnInit } from '@angular/core';
 import { LogicNodeOperator, ILogicNode } from 'src/app/public-components/logic-input/interfaces';
 
 const exampleTreeData: ILogicNode<IFieldCondition, 'and'> = {
+  id: 'root',
   operator: 'and',
+  status: 'online',
   conditions: [
     {
+      id: '1',
       operator: 'identity',
       conditions: {
         'f1': 1,
         'f2': 2,
       },
+      status: 'online',
     },
     {
+      id: '2',
       operator: 'identity',
       conditions: {
         'f1': 1,
         'f2': 2,
       },
+      status: 'online',
     },
     {
+      id: 'b1',
       operator: 'or',
       conditions: [
         {
+          id: 'b1-1',
           operator: 'identity',
           conditions: {
             'f1': 1,
             'f2': 2,
           },
+          status: 'online',
         },
         {
+          id: 'b1-2',
           operator: 'identity',
           conditions: {
             'f1': 1,
             'f2': 2,
           },
+          status: 'online',
         },
-      ]
+      ],
+      status: 'online'
     }
   ]
 }
