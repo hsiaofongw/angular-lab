@@ -12,6 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     RatingBarComponent
   ],
+  exports: [
+    RatingBarComponent,
+  ],
   imports: [
     CommonModule,
     BrowserAnimationsModule,

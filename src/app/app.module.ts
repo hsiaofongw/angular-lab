@@ -1,9 +1,10 @@
+import { RatingBarModule } from './public-components/rating-bar/rating-bar.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RaterComponent } from './rater/rater.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +14,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    RaterComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     ReactiveFormsModule,
     MatButtonModule,
+    RatingBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
