@@ -46,6 +46,17 @@ export class LogicInputComponent implements OnInit {
       let subNodes = node.conditions as Array<BranchLogicNode>;
       subNodes = subNodes.filter(n => n.status === 'online');
       subNodes = subNodes.map(n => this.cleanUnPlugged(n));
+      subNodes = subNodes.filter(n => {
+        if (n.operator === 'identity') {
+          return true;
+        }
+        else if ((n.conditions as Array<BranchLogicNode>).length > 0) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
       node.conditions = subNodes;
     }
 
