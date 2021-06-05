@@ -12,8 +12,9 @@ export interface ILogicNode<T1, T2 extends LogicNodeOperator> {
    * 节点的状态：
    * 'online' -> 显示
    * 'unplugged' -> 下线
+   * 'updating' -> 正在更新
    */
-  status: 'online' | 'unplugged';
+  status: 'online' | 'unplugged' | 'updating';
 
   /**
    * 操作符，目前支持：

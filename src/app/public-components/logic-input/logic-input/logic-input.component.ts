@@ -2,7 +2,7 @@ import { LogicNodeOperator, ILogicNode } from 'src/app/public-components/logic-i
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ArrayDataSource} from '@angular/cdk/collections';
-import {DataSource} from '@angular/cdk/collections';
+import { v4 as uuidv4 } from 'uuid';
 
 type BranchLogicNode = ILogicNode<unknown, LogicNodeOperator>;
 
@@ -25,7 +25,7 @@ export class LogicInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    window.setInterval(() => window.console.log(this.conditionTree), 1000);
+    // window.setInterval(() => window.console.log(this.conditionTree), 1000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -35,16 +35,37 @@ export class LogicInputComponent implements OnInit {
     }
   }
 
+  /** 响应节点删除事件 */
   handleDelete(node: BranchLogicNode): void {
     node.status = 'unplugged';
     this.dataSource = new ArrayDataSource([this.cleanUnPlugged(this.conditionTree as BranchLogicNode)]);
     this.dataSource = this.dataSource;
   }
 
+  /** 进行更新操作 */
+  updatingEveryNode(node: BranchLogicNode): BranchLogicNode {
+    if (node.operator !== 'identity') {
+      if (node.status === 'updating') {
+        node.status = 'online';
+      }
+      let subNodes = node.conditions as Array<BranchLogicNode>;
+      subNodes = subNodes.map(n => this.updatingEveryNode(n));
+      node.conditions = subNodes;
+    }
+
+    return {
+      id: node.id,
+      conditions: node.conditions,
+      status: node.status,
+      operator: node.operator,
+    };
+  }
+
+  /** 清除掉所有已经被标记为「删除」的节点 */
   cleanUnPlugged(node: BranchLogicNode): BranchLogicNode {
     if (node.operator !== 'identity') {
       let subNodes = node.conditions as Array<BranchLogicNode>;
-      subNodes = subNodes.filter(n => n.status === 'online');
+      subNodes = subNodes.filter(n => n.status !== 'unplugged');
       subNodes = subNodes.map(n => this.cleanUnPlugged(n));
       subNodes = subNodes.filter(n => {
         if (n.operator === 'identity') {
@@ -68,4 +89,29 @@ export class LogicInputComponent implements OnInit {
     };
   }
 
+  handleCreateCondition(node: BranchLogicNode) {
+    window.console.log(`在${node.id}创建条件`);
+
+    if (node.operator !== 'identity') {
+
+      window.console.log(`${node.id}.operator != 'identity'`);
+
+      let subNodes = node.conditions as BranchLogicNode[];
+      subNodes.push({id: uuidv4(), operator: 'identity', conditions: {}, status: 'online'});
+      node.conditions = subNodes;
+
+      window.console.log(node.conditions);
+
+    }
+
+    this.dataSource = new ArrayDataSource(
+      [
+        this.updatingEveryNode(this.conditionTree as BranchLogicNode)
+      ]
+    );
+  }
+
+  handleCreateConditionsGroup(node: BranchLogicNode) {
+    window.console.log(`在${node.id}创建条件组`);
+  }
 }

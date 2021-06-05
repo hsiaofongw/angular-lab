@@ -20,7 +20,10 @@
         <div class="logic-conditions-container">
           <ng-container cdkTreeNodeOutlet></ng-container>
 
-          <app-condition-add-button></app-condition-add-button>
+          <app-condition-add-button
+            (onCreateCondition)="handleCreateCondition(node)"
+            (onCreateConditionsGroup)="handleCreateConditionsGroup(node)"
+          ></app-condition-add-button>
         </div>
       </div>
     </cdk-nested-tree-node>
