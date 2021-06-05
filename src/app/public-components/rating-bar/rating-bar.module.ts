@@ -1,29 +1,24 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { RaterComponent } from './rater/rater.component';
+import { CommonModule } from '@angular/common';
+import { RatingBarComponent } from './rating-bar/rating-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
+/** 提供打分栏组件的模块 */
 @NgModule({
   declarations: [
-    AppComponent,
-    RaterComponent
+    RatingBarComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+    CommonModule,
     BrowserAnimationsModule,
     MatIconModule,
     ReactiveFormsModule,
     MatButtonModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ReactiveFormsModule,
+  ]
 })
-export class AppModule { }
+export class RatingBarModule { }
