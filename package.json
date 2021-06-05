@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node getVersion.js && ng build --optimization --delete-output-path",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
