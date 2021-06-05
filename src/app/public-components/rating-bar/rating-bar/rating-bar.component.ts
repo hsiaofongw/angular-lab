@@ -87,19 +87,23 @@ export class RatingBarComponent implements OnInit, ControlValueAccessor {
     this.isEditable = true;
   }
 
+  /** 响应来自上级表单输入 */
   writeValue(rating: number) {
     this.rate = rating as RateRange;
     this.onChange(rating);
   }
 
+  /** 允许上级表单注册值变动监听函数 */
   registerOnChange(fn: (rating: number) => void): void {
     this.onChange = fn;
   }
 
+  /** 允许上级表单注册 touch 事件监听函数 */
   registerOnTouched(fn: () => void) {
     this.onTouch = fn;
   }
 
+  /** 允许上级表单设置不可编辑状态 */
   setDisabledState() {
     this.isEditable = false;
   }

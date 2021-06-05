@@ -1,0 +1,14 @@
+<!-- <span
+  [ngClass]="
+    {
+      'logic-operator-box': true,
+      'button-like': isEditable
+    }
+  "
+
+></span> -->
+
+<button
+  mat-stroked-button
+  (click)="handleClick()"
+>{{ getLogicOperatorText(currentLogicOperator) }}</button>
