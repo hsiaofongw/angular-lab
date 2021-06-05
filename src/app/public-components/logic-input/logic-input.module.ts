@@ -8,6 +8,7 @@ import { LogicConditionComponent } from './logic-condition/logic-condition.compo
 import { ConditionAddButtonComponent } from './condition-add-button/condition-add-button.component';
 import { ConditionDeleteButtonComponent } from './condition-delete-button/condition-delete-button.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {CdkTreeModule} from '@angular/cdk/tree';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
     LogicConditionComponent,
     ConditionAddButtonComponent,
     ConditionDeleteButtonComponent,
+
   ],
   exports: [LogicInputComponent],
   imports: [
@@ -23,6 +25,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    CdkTreeModule,
   ]
 })
 export class LogicInputModule { }

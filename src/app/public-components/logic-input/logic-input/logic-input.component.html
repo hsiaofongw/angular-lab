@@ -1,51 +1,63 @@
-
 <div class="logic-input-control-container">
-
   <div class="login-condition-outer-container">
-
     <div class="logic-operator-color-bar-container">
       <app-logic-operator-button></app-logic-operator-button>
       <div class="color-bar"></div>
     </div>
 
     <div class="logic-conditions-container">
-      <div class="logic-condition-direct-container">
-        <app-logic-condition></app-logic-condition>
-        <app-condition-delete-button></app-condition-delete-button>
-      </div>
-      <div class="logic-condition-direct-container">
-        <app-logic-condition></app-logic-condition>
-        <app-condition-delete-button></app-condition-delete-button>
-      </div>
-
-
+      <ng-container *ngTemplateOutlet="leaf"></ng-container>
+      <ng-container *ngTemplateOutlet="leaf"></ng-container>
 
       <div class="login-condition-outer-container">
-
         <div class="logic-operator-color-bar-container">
           <app-logic-operator-button></app-logic-operator-button>
           <div class="color-bar"></div>
         </div>
 
         <div class="logic-conditions-container">
-          <div class="logic-condition-direct-container">
-            <app-logic-condition></app-logic-condition>
-            <app-condition-delete-button></app-condition-delete-button>
-          </div>
-          <div class="logic-condition-direct-container">
-            <app-logic-condition></app-logic-condition>
-            <app-condition-delete-button></app-condition-delete-button>
-          </div>
+          <ng-container *ngTemplateOutlet="leaf"></ng-container>
+          <ng-container *ngTemplateOutlet="leaf"></ng-container>
+
           <app-condition-add-button></app-condition-add-button>
         </div>
-
       </div>
-
-
 
       <app-condition-add-button></app-condition-add-button>
     </div>
-
   </div>
 
+  <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <!-- This is the tree node template for leaf nodes -->
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="example-tree-node" [cdkTreeNodePadding]="0">
+      <ng-container *ngTemplateOutlet="leaf"></ng-container>
+    </cdk-nested-tree-node>
+
+    <!-- This is the tree node template for expandable nodes -->
+    <cdk-nested-tree-node
+      *cdkTreeNodeDef="let node; when: hasChild"
+      class="example-tree-node"
+      [cdkTreeNodePadding]="0"
+    >
+      <div class="login-condition-outer-container">
+        <div class="logic-operator-color-bar-container">
+          <app-logic-operator-button></app-logic-operator-button>
+          <div class="color-bar"></div>
+        </div>
+
+        <div class="logic-conditions-container">
+          <ng-container cdkTreeNodeOutlet></ng-container>
+
+          <app-condition-add-button></app-condition-add-button>
+        </div>
+      </div>
+    </cdk-nested-tree-node>
+  </cdk-tree>
 </div>
+
+<ng-template #leaf>
+  <div class="logic-condition-direct-container">
+    <app-logic-condition></app-logic-condition>
+    <app-condition-delete-button></app-condition-delete-button>
+  </div>
+</ng-template>
