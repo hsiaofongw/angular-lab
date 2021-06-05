@@ -90,18 +90,11 @@ export class LogicInputComponent implements OnInit {
   }
 
   handleCreateCondition(node: BranchLogicNode) {
-    window.console.log(`在${node.id}创建条件`);
-
     if (node.operator !== 'identity') {
-
-      window.console.log(`${node.id}.operator != 'identity'`);
 
       let subNodes = node.conditions as BranchLogicNode[];
       subNodes.push({id: uuidv4(), operator: 'identity', conditions: {}, status: 'online'});
       node.conditions = subNodes;
-
-      window.console.log(node.conditions);
-
     }
 
     this.dataSource = new ArrayDataSource(
@@ -112,6 +105,28 @@ export class LogicInputComponent implements OnInit {
   }
 
   handleCreateConditionsGroup(node: BranchLogicNode) {
-    window.console.log(`在${node.id}创建条件组`);
+
+    if (node.operator !== 'identity') {
+
+      let subNodes = node.conditions as BranchLogicNode[];
+      subNodes.push(
+        {
+          id: uuidv4(),
+          operator: 'and',
+          conditions: [
+            {id: uuidv4(), operator: 'identity', conditions: {}, status: 'online'}
+          ],
+          status: 'online'
+        }
+      );
+      node.conditions = subNodes;
+
+    }
+
+    this.dataSource = new ArrayDataSource(
+      [
+        this.updatingEveryNode(this.conditionTree as BranchLogicNode)
+      ]
+    );
   }
 }
