@@ -19,7 +19,6 @@ export class LogicOperatorButtonComponent implements OnInit {
   @Input()
   inputLogicOperator?: LogicOperator;
 
-
   constructor() { }
 
   ngOnInit(): void {

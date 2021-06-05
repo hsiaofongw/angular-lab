@@ -1,27 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ILogicNode, LogicNodeOperator } from '../interfaces';
+import { LogicNodeOperator, ILogicNode } from 'src/app/public-components/logic-input/interfaces';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {ArrayDataSource} from '@angular/cdk/collections';
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optiona list of children.
- */
-interface TreeNode {
-  name: string;
-  children?: TreeNode[];
-}
-
-const TREE_DATA: TreeNode[] = [
-  {
-    name: 'Fruit',
-    children: [
-      {name: 'Apple'},
-      {name: 'Banana'},
-      {name: 'Fruit loops'},
-    ]
-  }
-];
+type BranchLogicNode = ILogicNode<unknown, LogicNodeOperator>;
 
 @Component({
   selector: 'app-logic-input',
@@ -30,10 +12,10 @@ const TREE_DATA: TreeNode[] = [
 })
 export class LogicInputComponent implements OnInit {
 
-  treeControl = new NestedTreeControl<TreeNode> (node => node.children);
-  dataSource = new ArrayDataSource(TREE_DATA);
+  treeControl = new NestedTreeControl<BranchLogicNode>(node => (node.conditions as Array<BranchLogicNode>));
+  dataSource = new ArrayDataSource([] as BranchLogicNode[]);
 
-  hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: BranchLogicNode) => node.operator !== 'identity';
 
   @Input()
   conditionTree?: ILogicNode<unknown, LogicNodeOperator>;
@@ -41,6 +23,13 @@ export class LogicInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.conditionTree) {
+      const nodes = [this.conditionTree];
+      this.dataSource = new ArrayDataSource(nodes);
+    }
   }
 
 }
